@@ -1,0 +1,8 @@
+prefix=/home/boscuit/catkin_ws/src/ros_keyboard_publisher/build/devel
+
+Name: ros_keyboard_publisher
+Description: Description of ros_keyboard_publisher
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

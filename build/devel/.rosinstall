@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/boscuit/catkin_ws/src/ros_keyboard_publisher/build/devel/setup.sh

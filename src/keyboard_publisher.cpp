@@ -2,6 +2,7 @@
 #include <ros/ros.h>
 #include <termios.h>
 #include <std_msgs/Bool.h>
+#include <std_msgs/Int8.h>
 
 using namespace std;
 
@@ -25,10 +26,12 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "keyboard_publisher");
   ros::NodeHandle nh;
-  ros::Publisher keyboard_pub = nh.advertise<std_msgs::Bool>("RequestRecord",1);
+  ros::Publisher Record_pub = nh.advertise<std_msgs::Bool>("RequestRecord",1);
+  ros::Publisher keyboard_pub = nh.advertise<std_msgs::Int8>("Request",1);
   std_msgs::Bool RequestRecord;
+  std_msgs::Int8 Request;
   bool bRequestRecord = false;
-  cout << "Press 'r' or 'R' to trigger record." << endl;
+  cout << "Press 'r' or 'R' to trigger record. Press 'p' or 'P' to process photo." << endl;
   cout << "-------------------------------" << endl;
 
   while (ros::ok())
@@ -46,8 +49,14 @@ int main(int argc, char **argv)
         RequestRecord.data = false;
         bRequestRecord = false;
       }
-      keyboard_pub.publish(RequestRecord);
+      Record_pub.publish(RequestRecord);
     }
+    else if(c == 'p' || c == 'P')
+    {
+      Request.data = 'p';
+      keyboard_pub.publish(Request);
+    }
+    usleep(3000);
   }
   cout << endl;
   return 0;
