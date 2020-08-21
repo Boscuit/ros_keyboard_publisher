@@ -2,7 +2,7 @@
 #include <ros/ros.h>
 #include <termios.h>
 #include <std_msgs/Bool.h>
-#include <std_msgs/Int8.h>
+#include <std_msgs/Char.h>
 
 using namespace std;
 
@@ -27,9 +27,9 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "keyboard_publisher");
   ros::NodeHandle nh;
   ros::Publisher Record_pub = nh.advertise<std_msgs::Bool>("RequestRecord",1);
-  ros::Publisher keyboard_pub = nh.advertise<std_msgs::Int8>("Request",1);
+  ros::Publisher keyboard_pub = nh.advertise<std_msgs::Char>("Request",1);
   std_msgs::Bool RequestRecord;
-  std_msgs::Int8 Request;
+  std_msgs::Char Request;
   bool bRequestRecord = false;
   cout << "Press 'r' or 'R' to trigger record. Press 'p' or 'P' to process photo." << endl;
   cout << "-------------------------------" << endl;
@@ -39,21 +39,38 @@ int main(int argc, char **argv)
     int c = getch();   // call your non-blocking input function
     if (c == 'r' || c == 'R')
     {
-      if(bRequestRecord == false)
-      {
-        RequestRecord.data = true;
-        bRequestRecord = true;
-      }
-      else
-      {
-        RequestRecord.data = false;
-        bRequestRecord = false;
-      }
-      Record_pub.publish(RequestRecord);
+      // if(bRequestRecord == false)
+      // {
+      //   RequestRecord.data = true;
+      //   bRequestRecord = true;
+      // }
+      // else
+      // {
+      //   RequestRecord.data = false;
+      //   bRequestRecord = false;
+      // }
+      // Record_pub.publish(RequestRecord);
+      Request.data = 'r';
+      keyboard_pub.publish(Request);
+    }
+    else if(c == 's' || c == 'S')
+    {
+      Request.data = 's';
+      keyboard_pub.publish(Request);
     }
     else if(c == 'p' || c == 'P')
     {
       Request.data = 'p';
+      keyboard_pub.publish(Request);
+    }
+    else if(c == 'b' || c == 'B')
+    {
+      Request.data = 'b';
+      keyboard_pub.publish(Request);
+    }
+    else if(c == 'x' || c == 'X')
+    {
+      Request.data = 'x';
       keyboard_pub.publish(Request);
     }
     usleep(3000);
